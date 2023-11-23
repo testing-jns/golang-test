@@ -1,0 +1,15 @@
+package main
+
+import "fmt"
+
+const name string = "Jhuanes Septinus"
+const age uint8 = 17
+const online bool = true
+const description string = `Hallo, nama saya`
+
+func main() {
+    fmt.Println("Hello, World!")
+    fmt.Printf("Nama saya : %s \n", name)
+    fmt.Printf("Saya berumur : %d tahun \n", age)
+    fmt.Printf("Online : %t \n", online)
+}

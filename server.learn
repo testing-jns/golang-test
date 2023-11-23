@@ -1,0 +1,74 @@
+package main
+
+import (
+    "fmt"
+    "log"
+    "net/http"
+)
+
+type RouteCallback func() string
+
+const port string = "8080"
+
+func webRouting() {
+    Route("GET", "/", func() string {
+        return "<h1>Home</h1>"
+    })
+    Route("GET", "/posts", func() string {
+        return "All Posting"
+    })
+    Route("GET", "/user", func() string {
+        return "Ini user"
+    })
+}
+
+func serverHandler() {
+    err_mess := http.ListenAndServe(":" + port, nil)
+    
+    if err_mess != nil {
+        log.Fatal(err_mess)
+    }
+}
+
+func main() {
+    fmt.Printf("Starting golang server at port %s \n", port)
+    webRouting()
+    serverHandler()
+}
+
+func Route(method string, path string, callback RouteCallback) {
+    
+    var paths[]string = []string{path}
+    
+    if path != "/" {
+        paths = append(paths, path + "/")
+    }
+    
+    for _, path := range paths {
+        routeHandler(method, path, callback)
+    }
+}
+
+func routeHandler(method string, path string, callback RouteCallback) {
+    http.HandleFunc(path, func(res http.ResponseWriter, req *http.Request) {
+        
+        var url_req_path string = req.URL.Path
+        
+        fmt.Println(path)
+        fmt.Println(url_req_path)
+        fmt.Println(req.Method)
+        fmt.Println("\n")
+        
+        if url_req_path != path {
+            http.Error(res, "404 Not Found", http.StatusNotFound)
+            return
+        }
+        
+        if req.Method != method {
+            http.Error(res, "Method Now Allowed", http.StatusNotFound)
+            return
+        }
+        
+        fmt.Fprintf(res, callback())
+    })
+}
