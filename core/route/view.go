@@ -3,7 +3,7 @@ package route
 import (
     "os"
     "log"
-    "app/core/config"
+    "app/config"
 )
 
 var root_path string = config.BASE_PATH() + "/views/"

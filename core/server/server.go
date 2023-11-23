@@ -4,7 +4,7 @@ import (
     "fmt"
     "log"
     "net/http"
-    "app/core/config"
+    "app/config"
     "app/core/terminal/color"
 )
 

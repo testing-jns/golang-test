@@ -2,7 +2,7 @@ package route
 
 import (
     "net/http"
-    "app/core/config"
+    "app/config"
 )
 
 type routeCallback func() string

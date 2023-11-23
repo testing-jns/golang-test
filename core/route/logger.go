@@ -7,6 +7,7 @@ import (
 
 func Log(method string, path string, code uint) {
     var color_route_log string = color.Green
+    
     if code != 200 {
         color_route_log = color.Red
     }
