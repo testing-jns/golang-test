@@ -48,8 +48,8 @@ func routeHandler(method string, path string, callback routeCallback) {
             return
         }
         
-        Log(routeLog.method, routeLog.request_path, routeLog.status_code)
         httpResponse(res, callback(), routeLog.status_code)
+        Log(routeLog.method, routeLog.request_path, routeLog.status_code)
     })
 }
 
@@ -88,6 +88,7 @@ func StaticFile(static_file string, request_static_path string) {
             status_code = http.StatusNotFound
         }
         
+        // httpResponse already handled by Route()
         Log(req.Method, req.URL.Path, status_code)
     })
 }
