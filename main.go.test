@@ -1,0 +1,22 @@
+package main
+
+import (
+	"fmt"
+	"flag"
+	"app/config"
+)
+
+var PORT = ""
+
+func main() {
+	port := flag.String("port", config.PORT, "Type your custom port!")
+	flag.Parse()
+	PORT = *port
+	
+	//args := flag.Args()
+	//fmt.Println(args)
+
+	if *port == "" {
+		PORT = config.PORT
+	}
+}

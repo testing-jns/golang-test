@@ -5,10 +5,13 @@ import (
     "log"
     "net/http"
     "app/config"
+    "app/core/terminal"
     "app/core/terminal/color"
 )
 
 func Serve() {
+    terminal.Cli()
+    
     fmt.Printf("%s Starting golang server at port %s%s %s \n", color.White, color.Blue, config.PORT, color.Reset)
     fmt.Println("")
     

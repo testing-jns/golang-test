@@ -1,6 +1,7 @@
 package route
 
 import (
+    "os"
     "net/http"
     "app/config"
 )
@@ -73,15 +74,30 @@ func httpResponse(res http.ResponseWriter, html string, code uint) {
 
 // Static File for Favicon Ico
 func FaviconHandler() {
-    http.HandleFunc("/favicon.ico", func(res http.ResponseWriter, req *http.Request) {
-        http.ServeFile(res, req, config.BASE_PATH() + "/static/favicon.ico")
-    })
+    StaticFile("/static/favicon.ico", "/favicon.ico")
 }
 
 func StaticFile(static_file string, request_static_path string) {
     http.HandleFunc(request_static_path, func(res http.ResponseWriter, req *http.Request) {
-        http.ServeFile(res, req, config.BASE_PATH() + static_file)
+        var file_path = config.BASE_PATH() + static_file
+        
+        http.ServeFile(res, req, file_path)
+        
+        var status_code uint = http.StatusOK
+        if !isFileExists(file_path) {
+            status_code = http.StatusNotFound
+        }
+        
+        Log(req.Method, req.URL.Path, status_code)
     })
+}
+
+func isFileExists(file_path string) bool {
+    _, err := os.Stat(file_path)
+    if err != nil {
+        return false
+    }
+    return true
 }
 
 func StaticDirectory(static_directory string, request_static_path string) {

@@ -5,7 +5,7 @@ import (
 	"log"
 )
 
-const PORT string = "8080"
+var PORT string = "8080"
 
 var BASE_PATH = func() string {
 	path, err := os.Getwd()
@@ -17,3 +17,6 @@ var BASE_PATH = func() string {
 	return path
 }
 
+func SetPort(port string) {
+    PORT = port
+}
